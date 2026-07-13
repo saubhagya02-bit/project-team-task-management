@@ -2,7 +2,7 @@
 
 Base URL: `http://localhost:5000/api` (or `NEXT_PUBLIC_API_URL` in production)
 
-A ready-to-import Postman collection is at [`postman_collection.json`](./postman_collection.json).
+A ready-to-import Postman collection is at [`postman_collection.json`]([./postman_collection.json](https://ushanisaubhagya.postman.co/workspace/Ushani-Saubhagya's-Workspace~e98db803-a71a-44ef-89ca-507bf7d34c30/collection/46038547-bfd4804f-0c36-4ea6-aaf5-2f0e8a1f2985?action=share&source=copy-link&creator=46038547)).
 
 All responses share this envelope:
 
@@ -134,6 +134,6 @@ Response `data`: `{ user, accessToken, refreshToken }`
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@pmt.test` | `Admin@123` |
-| Project Manager | `pm@pmt.test` | `Manager@123` |
-| Team Member | `member@pmt.test` | `Member@123` |
+| Admin | `admin@gmail.com` | `Admin@123` |
+| Project Manager | `manager@gmail.com` | `Manager@123` |
+| Team Member | `member@gmail.com` | `Member@123` |

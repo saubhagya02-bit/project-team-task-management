@@ -1,22 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import ProtectedRoute from "../../../components/ProtectedRoute";
-import Navbar from "../../../components/Navbar";
-import Badge from "../../../components/Badge";
-import TaskCard from "../../../components/TaskCard";
-import TaskForm from "../../../components/TaskForm";
-import MembersPanel from "../../../components/MembersPanel";
-import { useAuth } from "../../../context/AuthContext";
-import api from "../../../lib/api";
-import {
-  getErrorMessage,
-  PROJECT_STATUS_LABELS,
-  STATUS_LABELS,
-} from "../../../lib/format";
+import { useCallback, useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import ProtectedRoute from '../../../components/ProtectedRoute';
+import Navbar from '../../../components/Navbar';
+import Badge from '../../../components/Badge';
+import TaskCard from '../../../components/TaskCard';
+import TaskForm from '../../../components/TaskForm';
+import MembersPanel from '../../../components/MembersPanel';
+import { useAuth } from '../../../context/AuthContext';
+import api from '../../../lib/api';
+import { getErrorMessage, PROJECT_STATUS_LABELS, STATUS_LABELS } from '../../../lib/format';
 
-const COLUMNS = ["todo", "in_progress", "in_review", "done"];
+const COLUMNS = ['todo', 'in_progress', 'in_review', 'done'];
 
 function ProjectDetail() {
   const { id } = useParams();
@@ -26,13 +22,13 @@ function ProjectDetail() {
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     setLoading(true);
-    setError("");
+    setError('');
     try {
       const [projectRes, tasksRes] = await Promise.all([
         api.get(`/projects/${id}`),
@@ -45,19 +41,17 @@ function ProjectDetail() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [load]);
 
   if (loading) {
     return (
       <>
         <Navbar />
-        <main className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
-          Loading project…
-        </main>
+        <main className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">Loading project…</main>
       </>
     );
   }
@@ -67,15 +61,14 @@ function ProjectDetail() {
       <>
         <Navbar />
         <main className="mx-auto max-w-6xl px-6 py-10 text-sm text-red-600">
-          {error || "Project not found"}
+          {error || 'Project not found'}
         </main>
       </>
     );
   }
 
   const isManager =
-    user.role === "admin" ||
-    (user.role === "project_manager" && project.manager?.id === user.id);
+    user.role === 'admin' || (user.role === 'project_manager' && project.manager?.id === user.id);
 
   const createTask = async (payload) => {
     const res = await api.post(`/projects/${id}/tasks`, payload);
@@ -85,9 +78,7 @@ function ProjectDetail() {
 
   const updateTask = async (payload) => {
     const res = await api.patch(`/tasks/${editingTask.id}`, payload);
-    setTasks((prev) =>
-      prev.map((t) => (t.id === editingTask.id ? res.data.data : t)),
-    );
+    setTasks((prev) => prev.map((t) => (t.id === editingTask.id ? res.data.data : t)));
     setEditingTask(null);
   };
 
@@ -106,48 +97,30 @@ function ProjectDetail() {
     <>
       <Navbar />
       <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
-        <button
-          onClick={() => router.back()}
-          className="text-sm text-muted hover:text-ink"
-        >
+        <button onClick={() => router.back()} className="text-sm text-muted hover:text-ink">
           ← Back
         </button>
 
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="font-display text-2xl font-semibold">
-                {project.name}
-              </h1>
+              <h1 className="font-display text-2xl font-semibold">{project.name}</h1>
               <Badge type="status" value={project.status}>
                 {PROJECT_STATUS_LABELS[project.status]}
               </Badge>
             </div>
-            {project.description && (
-              <p className="text-sm text-muted mt-2 max-w-2xl">
-                {project.description}
-              </p>
-            )}
-            <p className="text-xs text-muted mt-2">
-              Managed by {project.manager?.name}
-            </p>
+            {project.description && <p className="text-sm text-muted mt-2 max-w-2xl">{project.description}</p>}
+            <p className="text-xs text-muted mt-2">Managed by {project.manager?.name}</p>
           </div>
           {isManager && (
-            <button
-              onClick={() => setShowTaskForm((s) => !s)}
-              className="btn-primary whitespace-nowrap"
-            >
-              {showTaskForm ? "Close" : "+ New task"}
+            <button onClick={() => setShowTaskForm((s) => !s)} className="btn-primary whitespace-nowrap">
+              {showTaskForm ? 'Close' : '+ New task'}
             </button>
           )}
         </div>
 
         {isManager && showTaskForm && (
-          <TaskForm
-            members={project.members}
-            onSubmit={createTask}
-            onCancel={() => setShowTaskForm(false)}
-          />
+          <TaskForm members={project.members} onSubmit={createTask} onCancel={() => setShowTaskForm(false)} />
         )}
 
         {isManager && editingTask && (
@@ -167,8 +140,7 @@ function ProjectDetail() {
             {COLUMNS.map((col) => (
               <div key={col} className="space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-                  {STATUS_LABELS[col]} ·{" "}
-                  {tasks.filter((t) => t.status === col).length}
+                  {STATUS_LABELS[col]} · {tasks.filter((t) => t.status === col).length}
                 </p>
                 <div className="space-y-3">
                   {tasks
@@ -199,7 +171,7 @@ function ProjectDetail() {
 
 export default function ProjectDetailPage() {
   return (
-    <ProtectedRoute allow={["admin", "project_manager", "team_member"]}>
+    <ProtectedRoute allow={['admin', 'project_manager', 'team_member']}>
       <ProjectDetail />
     </ProtectedRoute>
   );

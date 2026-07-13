@@ -142,6 +142,15 @@ via `POST /api/users` with a `role`.
 - [Feature Completion Report](./docs/feature-completion-report.md)
 - [CI/CD Explanation](./docs/ci-cd-explanation.md)
 
+## AI tool disclosure
+ 
+This project was built with the assistance of **Claude** (Anthropic). Claude
+was used to scaffold and write the backend (Express routes, Sequelize models,
+migrations, middleware, tests), the frontend (Next.js pages and components),
+and this documentation set. All generated code was reviewed, and the backend
+was verified end-to-end against a real PostgreSQL instance (migrations, seed
+data, the full test suite, and live API requests) before being included here.
+
 
 ## License
 

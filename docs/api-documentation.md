@@ -2,7 +2,7 @@
 
 Base URL: `http://localhost:5000/api` (or `NEXT_PUBLIC_API_URL` in production)
 
-A ready-to-import Postman collection is at [`postman_collection.json`]([./postman_collection.json](https://ushanisaubhagya.postman.co/workspace/Ushani-Saubhagya's-Workspace~e98db803-a71a-44ef-89ca-507bf7d34c30/collection/46038547-bfd4804f-0c36-4ea6-aaf5-2f0e8a1f2985?action=share&source=copy-link&creator=46038547)).
+A ready-to-import Postman collection is at [View Postman Collection](https://ushanisaubhagya.postman.co/workspace/Ushani-Saubhagya's-Workspace~e98db803-a71a-44ef-89ca-507bf7d34c30/collection/46038547-bfd4804f-0c36-4ea6-aaf5-2f0e8a1f2985)
 
 All responses share this envelope:
 
